@@ -1,0 +1,15 @@
+<!-- TTS pronunciation overrides — see templates/shorts/classic/PRONUNCIATION.md
+     - No acronyms or heteronyms in this script (audited against .claude/rules/tts-pronunciation.md:
+       live / lead / read / close / wind / tear / bow / minute / content / object / present / record — none present).
+     - "minutes" is plural noun (unit of time) — unambiguous.
+     Sources:
+     - 56% of nights / ~11 min snoozing: Scientific Reports 2025, "Snooze alarm use in a global population
+       of smartphone users" (Mass General Brigham, 3M+ nights) — https://www.nature.com/articles/s41598-025-99563-y
+-->
+Your morning routine is quietly working against you. <break time="0.35s"/> And it starts with one button. <break time="0.35s"/> SNOOZE. <break time="0.4s"/>
+
+One study tracked over 3 million nights. <break time="0.35s"/> 56 percent ended in a snooze. <break time="0.35s"/> And each time, about 11 minutes, gone. <break time="0.4s"/>
+
+Then comes the gauntlet. <break time="0.35s"/> The coffee tin is empty. <break time="0.45s"/> Your keys vanished overnight. <break time="0.45s"/> And the shower refuses to get warm. <break time="0.4s"/>
+
+Fix just ONE of these tonight. <break time="0.35s"/> Tomorrow gets easier. <break time="0.35s"/> Follow for more.
