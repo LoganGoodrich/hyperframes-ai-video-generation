@@ -458,7 +458,7 @@
 <div id="root"
      data-composition-id="main"
      data-start="0"
-     data-duration="24"
+     data-duration="26.9"
      data-width="1080"
      data-height="1920">
 
@@ -558,7 +558,7 @@
     <div class="phase-content">
       <div class="overline" id="p4-overline">YOUR MOVE TONIGHT</div>
       <div id="p4-topic">FIX ONE THING.</div>
-      <div id="p4-url">56% of nights end in snooze</div>
+      <div id="p4-url">56% of nights: snoozed</div>
       <div id="p4-outcome">3 morning annoyances, 1 easy fix</div>
       <div id="p4-subscribe">Follow for more<span class="arrow">&rarr;</span></div>
     </div>
@@ -614,6 +614,14 @@
            data-volume="0.11"
   -->
 
+  <audio id="narration"
+         class="clip"
+         src="audio/narration.wav"
+         data-start="0"
+         data-duration="25.42"
+         data-track-index="2"
+         data-volume="1"></audio>
+
   <!-- Film-grain overlay — last child so it sits on top and tints everything via blend mode -->
   <svg id="noise-overlay" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -635,13 +643,13 @@
   // ─────────────────────────────────────────────────────
   tl.fromTo("#ambient",
     { opacity: 0.85, scale: 1.0 },
-    { opacity: 1.0, scale: 1.04, duration: 12, ease: "sine.inOut", yoyo: true, repeat: 1 },
+    { opacity: 1.0, scale: 1.04, duration: 13.45, ease: "sine.inOut", yoyo: true, repeat: 1 },
     0);
 
-  // Progress bar fills linearly across the composition (24s total)
+  // Progress bar fills with the narration (25.4s) so the final 1.5s thumbnail hold is fully static
   tl.fromTo("#progress-fill",
     { width: 0 },
-    { width: 1080, duration: 24, ease: "none" },
+    { width: 1080, duration: 25.4, ease: "none" },
     0);
 
   // Top banner fade-in (one-shot, then static)
@@ -651,26 +659,26 @@
   // PHASE 1 — Hero slam (0-6s) : entrances only
   // =======================================================
   tl.from("#p1-overline", { y: 20, opacity: 0, duration: 0.5, ease: "power2.out" }, 0.4);
-  tl.from("#p1-pre",      { y: 30, opacity: 0, duration: 0.6, ease: "power3.out" }, 0.8);
-  tl.from("#p1-hero",     { scale: 0.78, opacity: 0, duration: 0.8, ease: "back.out(1.7)" }, 1.4);
+  tl.from("#p1-pre",      { y: 30, opacity: 0, duration: 0.6, ease: "power3.out" }, 2.75);  // "And it starts with one button"
+  tl.from("#p1-hero",     { scale: 0.78, opacity: 0, duration: 0.8, ease: "back.out(1.7)" }, 3.9);
   // Gradient drift on the hero word — bright-blue->sky-blue sweeps left->right across its lifetime.
   // sine.inOut so the motion is breathing, not linear. No repeat — single sweep.
-  const gradient_drift_duration = 4.0;
+  const gradient_drift_duration = 1.0;
   tl.fromTo("#p1-hero",
     { backgroundPosition: "0% 50%" },
     { backgroundPosition: "100% 50%", duration: gradient_drift_duration, ease: "sine.inOut" },
-    1.6);
+    4.3);
   // Inline shake on the slam frame — 4 short ticks +-5px, then settle
   const shake_offsets = [5, -5, 4, 0];
-  const slam_t = 1.55;
+  const slam_t = 4.3;   // "SNOOZE" spoken
   tl.to("#p1-hero", { x: shake_offsets[0], duration: 0.04, ease: "none", overwrite: "auto" }, slam_t);
   tl.to("#p1-hero", { x: shake_offsets[1], duration: 0.04, ease: "none", overwrite: "auto" }, slam_t + 0.05);
   tl.to("#p1-hero", { x: shake_offsets[2], duration: 0.04, ease: "none", overwrite: "auto" }, slam_t + 0.10);
   tl.to("#p1-hero", { x: shake_offsets[3], duration: 0.04, ease: "none", overwrite: "auto" }, slam_t + 0.15);
-  tl.from("#p1-caption", { y: 24, opacity: 0, duration: 0.5, ease: "power2.out" }, 2.2);
+  tl.from("#p1-caption", { y: 24, opacity: 0, duration: 0.5, ease: "power2.out" }, 1.1);  // "...working against you"
 
   // --- Transition phase1 -> phase2 at 5.6s : blur + crossfade ---
-  const T1 = 5.6;
+  const T1 = 5.35;
   tl.to("#phase1", { filter: "blur(20px)", scale: 1.04, duration: 0.5, ease: "power1.in" }, T1);
   tl.to("#phase1", { opacity: 0,                          duration: 0.4, ease: "power1.in" }, T1 + 0.3);
   tl.set("#phase1", { visibility: "hidden" }, T1 + 0.7);
@@ -681,14 +689,16 @@
   // =======================================================
   // PHASE 2 — Stat pill row (6-12s) : entrances only
   // =======================================================
-  const P2 = 6.4;
+  const P2 = 5.75;
   tl.from("#p2-overline", { y: 20, opacity: 0, duration: 0.5, ease: "power2.out" }, P2 + 0.0);
   tl.from("#p2-headline", { y: 30, opacity: 0, duration: 0.6, ease: "power3.out" }, P2 + 0.3);
-  tl.from("#p2-pill-1",   { scale: 0.85, opacity: 0, duration: 0.6, ease: "back.out(1.6)" }, P2 + 0.9);
-  tl.from("#p2-pill-2",   { scale: 0.85, opacity: 0, duration: 0.6, ease: "back.out(1.6)" }, P2 + 1.4);
+  tl.set("#p2-pill-1", { scale: 0.85, opacity: 0 }, 0);
+  tl.set("#p2-pill-2", { scale: 0.85, opacity: 0 }, 0);
+  tl.to("#p2-pill-1", { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.6)" }, 8.3);    // "56 percent"
+  tl.to("#p2-pill-2", { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.6)" }, 11.65);  // "11 minutes"
 
   // --- Transition phase2 -> phase3 at 11.6s ---
-  const T2 = 11.6;
+  const T2 = 12.88;
   tl.to("#phase2", { filter: "blur(20px)", scale: 1.04, duration: 0.5, ease: "power1.in" }, T2);
   tl.to("#phase2", { opacity: 0,                          duration: 0.4, ease: "power1.in" }, T2 + 0.3);
   tl.set("#phase2", { visibility: "hidden" }, T2 + 0.7);
@@ -699,14 +709,17 @@
   // =======================================================
   // PHASE 3 — Feature cards (12-18s) : entrances only
   // =======================================================
-  const P3 = 12.4;
+  const P3 = 13.28;
   tl.from("#p3-overline", { y: 20, opacity: 0, duration: 0.5, ease: "power2.out" }, P3 + 0.0);
-  tl.from("#p3-card-1",   { x: -40, scale: 0.95, opacity: 0, duration: 0.55, ease: "back.out(1.5)" }, P3 + 0.5);
-  tl.from("#p3-card-2",   { x: -40, scale: 0.95, opacity: 0, duration: 0.55, ease: "back.out(1.5)" }, P3 + 0.95);
-  tl.from("#p3-card-3",   { x: -40, scale: 0.95, opacity: 0, duration: 0.55, ease: "back.out(1.5)" }, P3 + 1.4);
+  tl.set("#p3-card-1", { x: -40, scale: 0.95, opacity: 0 }, 0);
+  tl.set("#p3-card-2", { x: -40, scale: 0.95, opacity: 0 }, 0);
+  tl.set("#p3-card-3", { x: -40, scale: 0.95, opacity: 0 }, 0);
+  tl.to("#p3-card-1", { x: 0, scale: 1, opacity: 1, duration: 0.55, ease: "back.out(1.5)" }, 15.2);  // "coffee"
+  tl.to("#p3-card-2", { x: 0, scale: 1, opacity: 1, duration: 0.55, ease: "back.out(1.5)" }, 17.0);  // "keys"
+  tl.to("#p3-card-3", { x: 0, scale: 1, opacity: 1, duration: 0.55, ease: "back.out(1.5)" }, 18.8);  // "shower"
 
   // --- Transition phase3 -> phase4 at 17.6s ---
-  const T3 = 17.6;
+  const T3 = 20.5;
   tl.to("#phase3", { filter: "blur(20px)", scale: 1.04, duration: 0.5, ease: "power1.in" }, T3);
   tl.to("#phase3", { opacity: 0,                          duration: 0.4, ease: "power1.in" }, T3 + 0.3);
   tl.set("#phase3", { visibility: "hidden" }, T3 + 0.7);
@@ -717,14 +730,14 @@
   // =======================================================
   // PHASE 4 — CTA URL slam (18-24s) : entrances only
   // =======================================================
-  const P4 = 18.4;
+  const P4 = 20.9;
   tl.from("#p4-overline",  { y: 20, opacity: 0, duration: 0.5, ease: "power2.out" }, P4 + 0.0);
-  tl.from("#p4-topic",     { scale: 0.85, opacity: 0, duration: 0.6, ease: "back.out(1.6)" }, P4 + 0.2);
-  tl.from("#p4-url",       { scale: 0.85, opacity: 0, duration: 0.6, ease: "expo.out" }, P4 + 0.8);
-  tl.from("#p4-outcome",   { y: 24, opacity: 0, duration: 0.5, ease: "power2.out" }, P4 + 1.3);
-  tl.from("#p4-subscribe", { y: 24, opacity: 0, duration: 0.5, ease: "power2.out" }, P4 + 1.6);
+  tl.from("#p4-topic",     { scale: 0.85, opacity: 0, duration: 0.6, ease: "back.out(1.6)" }, 21.4);   // "Fix just ONE"
+  tl.from("#p4-url",       { scale: 0.85, opacity: 0, duration: 0.6, ease: "expo.out" }, 22.4);
+  tl.from("#p4-outcome",   { y: 24, opacity: 0, duration: 0.5, ease: "power2.out" }, 23.0);       // "Tomorrow gets easier"
+  tl.from("#p4-subscribe", { y: 24, opacity: 0, duration: 0.5, ease: "power2.out" }, 24.3);       // "Follow for more"
 
-  // Phase 4 stays fully visible to the end — composition naturally ends at 24s
+  // Phase 4 holds static from 24.8s to 26.9s — thumbnail-grade final frame
 
   window.__timelines["main"] = tl;
 </script>
